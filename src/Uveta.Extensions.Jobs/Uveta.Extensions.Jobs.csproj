@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Uveta.Extensions.Jobs.Workers\Uveta.Extensions.Jobs.Workers.csproj" />
+    <ProjectReference Include="..\Uveta.Extensions.Jobs.Endpoints\Uveta.Extensions.Jobs.Endpoints.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+</Project>
