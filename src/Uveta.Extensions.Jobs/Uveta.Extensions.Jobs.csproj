@@ -6,13 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Uveta.Extensions.Jobs.Workers\Uveta.Extensions.Jobs.Workers.csproj" />
-    <ProjectReference Include="..\Uveta.Extensions.Jobs.Endpoints\Uveta.Extensions.Jobs.Endpoints.csproj" />
     <ProjectReference Include="..\Uveta.Extensions.Jobs.Abstractions\Uveta.Extensions.Jobs.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
 </Project>

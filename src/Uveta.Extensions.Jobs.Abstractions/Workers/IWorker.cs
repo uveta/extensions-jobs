@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 
 namespace Uveta.Extensions.Jobs.Abstractions.Workers
 {
-    public interface IWorker<TInput, TOutput> where TOutput : class
+    public interface IWorker<TInput, TOutput>
     {
         TimeSpan? EstimateExecutionTime(TInput input);
         Task<JobExecutionResult<TOutput>> ExecuteAsync(TInput input, CancellationToken cancel);
-        Task DeleteOutputAsync(TInput input, TOutput output, CancellationToken cancel);
+        Task DeleteOutputAsync(TInput input, TOutput? output, CancellationToken cancel);
     }
 }

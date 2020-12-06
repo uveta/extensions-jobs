@@ -38,7 +38,7 @@ namespace Uveta.Extensions.Jobs.Abstractions.Workers
         }
     }
 
-    public sealed class JobExecutionResult<T> : JobExecutionResult where T : class
+    public sealed class JobExecutionResult<T> : JobExecutionResult
     {
         internal JobExecutionResult()
         {
