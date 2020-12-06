@@ -1,12 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Uveta.Extensions.Jobs.Workers\Uveta.Extensions.Jobs.Workers.csproj" />
     <ProjectReference Include="..\Uveta.Extensions.Jobs.Endpoints\Uveta.Extensions.Jobs.Endpoints.csproj" />
+    <ProjectReference Include="..\Uveta.Extensions.Jobs.Abstractions\Uveta.Extensions.Jobs.Abstractions.csproj" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+  </ItemGroup>
 
 </Project>
