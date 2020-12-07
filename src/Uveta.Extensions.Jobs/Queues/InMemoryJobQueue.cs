@@ -1,14 +1,21 @@
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using Uveta.Extensions.Jobs.Abstractions.Models;
 using Uveta.Extensions.Jobs.Abstractions.Queues;
 
 namespace Uveta.Extensions.Jobs.Queues
 {
-    internal class InMemoryJobQueue : IQueue
+    internal class InMemoryJobQueue : IJobQueue
     {
-        // TODO: add publisher option not to wait for consumers
+        private readonly InMemoryJobQueueConfiguration _configuration;
+
+        public InMemoryJobQueue(IOptions<InMemoryJobQueueConfiguration> options)
+        {
+            _configuration = options.Value;
+        }
+
         private readonly ConcurrentDictionary<string, QueueConsumer> _consumers =
             new ConcurrentDictionary<string, QueueConsumer>();
 
@@ -29,7 +36,7 @@ namespace Uveta.Extensions.Jobs.Queues
         private async Task PublishMessageAsync(Job item, string queueName, CancellationToken cancel)
         {
             if (!_consumers.TryGetValue(queueName, out var consumer)) return;
-            await consumer.OnNewItemAsync(item);
+            await consumer.OnNewJobAsync(item, _configuration.WaitForHandlers);
         }
 
         private void RemoveConsumer(string queueName)

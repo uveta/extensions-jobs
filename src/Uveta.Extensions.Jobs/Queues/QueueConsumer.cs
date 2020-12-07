@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Uveta.Extensions.Jobs.Abstractions.Models;
@@ -13,9 +14,9 @@ namespace Uveta.Extensions.Jobs.Queues
 
         public event Func<Job, Delivery, Task>? JobQueued;
 
-    #pragma warning disable CS0067
+#pragma warning disable CS0067
         public event Func<ErrorArgs, Delivery, Task>? Error;
-    #pragma warning restore CS0067
+#pragma warning restore CS0067
 
         public QueueConsumer(Action onDispose)
         {
@@ -27,18 +28,25 @@ namespace Uveta.Extensions.Jobs.Queues
             return Task.CompletedTask;
         }
 
-        public async Task OnNewItemAsync(Job item)
+        public async Task OnNewJobAsync(Job job, bool waitForHandlers)
         {
             var delivery = new Delivery(false);
             if (JobQueued is null) return;
-            Func<Job, Delivery, Task> handler = JobQueued;
-            Delegate[] invocationList = handler.GetInvocationList();
-            Task[] handlerTasks = new Task[invocationList.Length];
-            for (int i = 0; i < invocationList.Length; i++)
+            if (waitForHandlers)
             {
-                handlerTasks[i] = ((Func<Job, Delivery, Task>)invocationList[i])(item, delivery);
+                Func<Job, Delivery, Task> handler = JobQueued;
+                List<Task> handlerTasks = new();
+                foreach (var invocation in handler.GetInvocationList())
+                {
+                    var task = ((Func<Job, Delivery, Task>)invocation)(job, delivery);
+                    handlerTasks.Add(task);
+                }
+                await Task.WhenAll(handlerTasks);
             }
-            await Task.WhenAll(handlerTasks);
+            else
+            {
+                await JobQueued(job, delivery);
+            }
         }
 
         public void Dispose()

@@ -19,15 +19,9 @@ namespace Uveta.Extensions.Jobs.Workers.DependencyInjection
             Services.AddOptions<WorkerConfiguration<TWorker>>()
                 .Configure(worker)
                 .Validate(WorkerConfiguration<TWorker>.Validate);
-            AddWorkerServices<TWorker, TInput, TOutput>();
-            return this;
-        }
-
-        private void AddWorkerServices<TWorker, TInput, TOutput>()
-            where TWorker : class, IWorker<TInput, TOutput>
-        {
             Services.AddScoped<TWorker>();
             Services.AddHostedService<WorkerInvoker<TWorker, TInput, TOutput>>();
+            return this;
         }
     }
 }

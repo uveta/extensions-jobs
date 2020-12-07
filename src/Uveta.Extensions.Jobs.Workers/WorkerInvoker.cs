@@ -19,7 +19,7 @@ namespace Uveta.Extensions.Jobs.Workers
         private readonly WorkerConfiguration<TWorker> _workerConfiguration;
         private readonly ISerializer<TInput> _inputSerializer;
         private readonly ISerializer<TOutput> _outputSerializer;
-        private readonly IQueue _jobQueue;
+        private readonly IJobQueue _jobQueue;
         private readonly IWorkerScopeFactory _scopeFactory;
         private readonly IJobRepository _jobRepository;
         private readonly IQueueConsumer _consumer;
@@ -30,7 +30,7 @@ namespace Uveta.Extensions.Jobs.Workers
             IOptions<WorkerConfiguration<TWorker>> workerConfiguration,
             ISerializer<TInput> inputSerializer,
             ISerializer<TOutput> outputSerializer,
-            IQueue jobQueue,
+            IJobQueue jobQueue,
             IWorkerScopeFactory scopeFactory,
             ILogger<WorkerInvoker<TWorker, TInput, TOutput>> logger)
         {

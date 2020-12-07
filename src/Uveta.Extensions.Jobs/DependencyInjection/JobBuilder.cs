@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Uveta.Extensions.Jobs.Abstractions.Queues;
 using Uveta.Extensions.Jobs.Abstractions.Repositories;
@@ -12,11 +13,13 @@ namespace Uveta.Extensions.Jobs.DependencyInjection
     {
         public IServiceCollection Services { get; }
 
-        public JobBuilder(IServiceCollection services)
+        public JobBuilder(IServiceCollection services, Action<InMemoryJobQueueConfiguration>? queue = null)
         {
             Services = services;
             services.AddSingleton<IJobRepository, InMemoryJobRepository>();
-            services.AddSingleton<IQueue, InMemoryJobQueue>();
+            var queueConfigurationBuilder = Services.AddOptions<InMemoryJobQueueConfiguration>();
+            if (queue != null) queueConfigurationBuilder.Configure(queue);
+            services.AddSingleton<IJobQueue, InMemoryJobQueue>();
             services.AddSingleton(typeof(ISerializer<>), typeof(JsonSerializer<>));
         }
 
@@ -26,9 +29,9 @@ namespace Uveta.Extensions.Jobs.DependencyInjection
             return this;
         }
 
-        public JobBuilder AddQueue<T>() where T : class, IQueue
+        public JobBuilder AddQueue<T>() where T : class, IJobQueue
         {
-            Services.AddSingleton<IQueue, T>();
+            Services.AddSingleton<IJobQueue, T>();
             return this;
         }
     }
