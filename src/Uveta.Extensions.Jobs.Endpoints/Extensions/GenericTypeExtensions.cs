@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace CPTL.Extensions.Jobs.Endpoints.Extensions
+namespace Uveta.Extensions.Jobs.Endpoints.Extensions
 {
     public static class GenericTypeExtensions
     {

@@ -7,7 +7,7 @@ namespace Uveta.Extensions.Jobs.Endpoints.DependencyInjection
     {
         public IServiceCollection Services { get; }
 
-        internal EndpointsBuilder(IServiceCollection services)
+        internal protected EndpointsBuilder(IServiceCollection services)
         {
             Services = services;
         }
@@ -21,13 +21,13 @@ namespace Uveta.Extensions.Jobs.Endpoints.DependencyInjection
             return this;
         }
 
-        private void AddEndpointService<TEndpoint, TInput, TOutput>()
+        protected void AddEndpointService<TEndpoint, TInput, TOutput>()
             where TEndpoint : class, IEndpoint<TInput, TOutput>
         {
             Services.AddSingleton<Endpoint<TEndpoint, TInput, TOutput>>();
         }
 
-        private void AddConfiguration<TEndpoint, TInput, TOutput>(
+        protected void AddConfiguration<TEndpoint, TInput, TOutput>(
             Action<EndpointConfiguration<TEndpoint>> endpoint)
             where TEndpoint : class, IEndpoint<TInput, TOutput>
         {
