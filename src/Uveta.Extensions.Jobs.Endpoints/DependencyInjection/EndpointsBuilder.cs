@@ -1,40 +1,41 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
+using Uveta.Extensions.Jobs.Abstractions.Endpoints;
 
 namespace Uveta.Extensions.Jobs.Endpoints.DependencyInjection
 {
-    public class EndpointsBuilder
+    public sealed class EndpointsBuilder
     {
-        public IServiceCollection Services { get; }
+        internal IServiceCollection Services { get; }
 
-        internal protected EndpointsBuilder(IServiceCollection services)
+        internal EndpointsBuilder(IServiceCollection services)
         {
             Services = services;
         }
 
         public EndpointsBuilder AddEndpoint<TEndpoint, TInput, TOutput>(
             Action<EndpointConfiguration<TEndpoint>> endpoint)
-            where TEndpoint : class, IEndpoint<TInput, TOutput>
+            where TEndpoint : IEndpoint
         {
-            AddConfiguration<TEndpoint, TInput, TOutput>(endpoint);
+            AddConfiguration(endpoint);
             AddEndpointService<TEndpoint, TInput, TOutput>();
             return this;
         }
 
-        protected void AddEndpointService<TEndpoint, TInput, TOutput>()
-            where TEndpoint : class, IEndpoint<TInput, TOutput>
-        {
-            Services.AddSingleton<Endpoint<TEndpoint, TInput, TOutput>>();
-        }
-
-        protected void AddConfiguration<TEndpoint, TInput, TOutput>(
+        private void AddConfiguration<TEndpoint>(
             Action<EndpointConfiguration<TEndpoint>> endpoint)
-            where TEndpoint : class, IEndpoint<TInput, TOutput>
+            where TEndpoint : IEndpoint
         {
             Services
                 .AddOptions<EndpointConfiguration<TEndpoint>>()
                 .Configure(endpoint)
                 .Validate(EndpointConfiguration.Validate);
+        }
+
+        private void AddEndpointService<TEndpoint, TInput, TOutput>()
+            where TEndpoint : IEndpoint
+        {
+            Services.AddSingleton<Endpoint<TEndpoint, TInput, TOutput>>();
         }
     }
 }

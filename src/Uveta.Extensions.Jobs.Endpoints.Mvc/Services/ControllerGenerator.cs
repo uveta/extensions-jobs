@@ -34,7 +34,7 @@ namespace Uveta.Extensions.Jobs.Endpoints.Mvc.Services
         public void GenerateControllerType(Type controllerType, Type endpointType)
         {
             // Check, whether controller was already generated for given endPoint type
-            if (_alreadyGeneratedControllerTypes.TryGetValue(endpointType, out Type generatedControllerType))
+            if (_alreadyGeneratedControllerTypes.TryGetValue(endpointType, out Type? generatedControllerType))
             {
                 _controllerTypes.Add(generatedControllerType.GetTypeInfo());
                 return;
@@ -49,14 +49,20 @@ namespace Uveta.Extensions.Jobs.Endpoints.Mvc.Services
                 }
             }
             generatedControllerType = GenerateControllerType(NAMESPACE, GetGeneratedTypeName(controllerType), controllerType);
+            if (generatedControllerType is null)
+            { 
+                throw new InvalidOperationException(
+                    $"Unable to generate controller type {NAMESPACE}.{controllerType.Name}");
+            }
             _alreadyGeneratedControllerTypes.TryAdd(endpointType, generatedControllerType);
         }
 
-        private Type GenerateControllerType(string nmspace, string name, Type baseControllerType)
+        private Type? GenerateControllerType(string nmspace, string name, Type baseControllerType)
         {
             var builder = CreateType(_moduleBuilder, baseControllerType, nmspace, name);
             CreateControllerConstructor(builder, baseControllerType);
-            Type controllerType = builder.CreateTypeInfo();
+            Type? controllerType = builder.CreateTypeInfo();
+            if (controllerType is null) return null;
             _controllerTypes.Add(controllerType.GetTypeInfo());
             return controllerType;
         }

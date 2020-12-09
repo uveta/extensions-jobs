@@ -1,4 +1,6 @@
-﻿namespace Uveta.Extensions.Jobs.Endpoints
+﻿using Uveta.Extensions.Jobs.Abstractions.Endpoints;
+
+namespace Uveta.Extensions.Jobs.Endpoints
 {
     public abstract class EndpointConfiguration
     {

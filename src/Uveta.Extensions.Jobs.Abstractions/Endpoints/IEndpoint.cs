@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Uveta.Extensions.Jobs.Abstractions.Models;
 
-namespace Uveta.Extensions.Jobs.Endpoints
+namespace Uveta.Extensions.Jobs.Abstractions.Endpoints
 {
     public interface IEndpoint
     {

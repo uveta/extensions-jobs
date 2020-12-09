@@ -45,7 +45,7 @@ namespace Uveta.Extensions.Jobs.Queues
             }
             else
             {
-                await JobQueued(job, delivery);
+                Task.Run(() => JobQueued(job, delivery));
             }
         }
 

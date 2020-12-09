@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using Uveta.Extensions.Jobs.Abstractions.Endpoints;
 using Uveta.Extensions.Jobs.Abstractions.Models;
 using Uveta.Extensions.Jobs.Abstractions.Queues;
 using Uveta.Extensions.Jobs.Abstractions.Repositories;
@@ -10,7 +11,7 @@ using Uveta.Extensions.Jobs.Abstractions.Serialization;
 namespace Uveta.Extensions.Jobs.Endpoints
 {
     public sealed class Endpoint<TEndpoint, TInput, TOutput> : IEndpoint<TInput, TOutput>
-        where TEndpoint : IEndpoint<TInput, TOutput>
+        where TEndpoint : IEndpoint
     {
         private readonly EndpointConfiguration _configuration;
         private readonly ISerializer<TInput> _inputSerializer;

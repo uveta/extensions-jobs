@@ -1,9 +1,6 @@
 ﻿using System;
 using Uveta.Extensions.Jobs.DependencyInjection;
-using Uveta.Extensions.Jobs.Endpoints.DependencyInjection;
-using Uveta.Extensions.Jobs.Endpoints.Extensions;
 using Uveta.Extensions.Jobs.Endpoints.Mvc.DependencyInjection;
-using Uveta.Extensions.Jobs.Endpoints.Mvc.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Uveta.Extensions.Jobs.Endpoints.Mvc.Extensions
@@ -19,10 +16,10 @@ namespace Uveta.Extensions.Jobs.Endpoints.Mvc.Extensions
             builder(endpoints);
 
             services.AddMvcCore(mvc => mvc
-                .Conventions.Add(new JobControllerModelConvention(endpoints.Configurations))
+                .Conventions.Add(new JobControllerModelConvention(endpoints.Controllers))
             )
             .ConfigureApplicationPartManager(manager => manager
-                .ApplicationParts.Add(new JobsApplicationPart(endpoints.Configurations))
+                .ApplicationParts.Add(new JobsApplicationPart(endpoints.Controllers))
             );
             return jobBuilder;
         }

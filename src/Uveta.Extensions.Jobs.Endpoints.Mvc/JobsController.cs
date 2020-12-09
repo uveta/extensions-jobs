@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Uveta.Extensions.Jobs.Abstractions.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Uveta.Extensions.Jobs.Abstractions.Endpoints;
+using Uveta.Extensions.Jobs.Abstractions.Models;
 
 namespace Uveta.Extensions.Jobs.Endpoints.Mvc
 {
     [Route("jobs/[controller]")]
     [ApiController]
     public class JobsController<TEndpoint, TInput, TOutput> : ControllerBase
-        where TEndpoint : IEndpoint<TInput, TOutput>
+        where TEndpoint : IEndpoint
         where TOutput : class
     {
         private readonly Endpoint<TEndpoint, TInput, TOutput> _jobEndpoint;
@@ -26,7 +27,7 @@ namespace Uveta.Extensions.Jobs.Endpoints.Mvc
         }
 
         [HttpPost]
-        [ProducesResponseType(202)]
+        [ProducesResponseType(typeof(Job), 202)]
         [ProducesResponseType(400)]
         public async Task<ActionResult<Job>> CreateJob(
             [FromBody] TInput request,
@@ -41,7 +42,7 @@ namespace Uveta.Extensions.Jobs.Endpoints.Mvc
                 controller: ControllerContext.ActionDescriptor.ControllerName,
                 values: new { id = job.Header.Identifier.Id });
 
-            return Accepted(location);
+            return Accepted(location, job);
         }
 
         [HttpGet("{id}")]

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Uveta.Extensions.Jobs.Endpoints.Extensions;
+using Uveta.Extensions.Jobs.Endpoints.Mvc.DependencyInjection;
 
 namespace Uveta.Extensions.Jobs.Endpoints.Mvc
 {
@@ -10,15 +11,11 @@ namespace Uveta.Extensions.Jobs.Endpoints.Mvc
         private readonly IDictionary<Type, EndpointConfiguration> _configurations =
             new Dictionary<Type, EndpointConfiguration>();
 
-        public JobControllerModelConvention(IEnumerable<EndpointConfiguration> configurations)
+        public JobControllerModelConvention(IEnumerable<ControllerEndpoint> controllers)
         {
-            foreach (var configuration in configurations)
+            foreach (var controller in controllers)
             {
-                var type = configuration.GetType();
-                if (!type.IsSubclassOfGeneric(typeof(EndpointConfiguration<>))) return;
-                Type[] genericArguments = type.GetGenericArguments();
-                var endpointType = genericArguments[0];
-                _configurations[endpointType] = configuration;
+                _configurations[controller.Endpoint] = controller.Configuration;
             }
         }
 
