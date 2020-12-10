@@ -1,0 +1,29 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<p>
+    Go to <a href="swagger">Swagger definition</a>
+</p>
+
+<div class="text=center">
+    <div>
+        <button onclick="createJob(this.value)" value="ping" class="btn btn-primary">Start ping job</button>
+    </div>
+    <div>
+        <label for="job-id">Job Id:</label><span id="job-id">123-456-789</span>
+    </div>
+    <div>
+        <label for="job-status">Job Status:</label><span id="job-status">started</span>
+    </div>
+    <div>
+        <label for="job-output">Job Output:</label><span id="job-output">output</span>
+    </div>
+</div>
