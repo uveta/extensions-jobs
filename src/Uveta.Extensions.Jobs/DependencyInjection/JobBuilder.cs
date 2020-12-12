@@ -16,10 +16,22 @@ namespace Uveta.Extensions.Jobs.DependencyInjection
         public JobBuilder(IServiceCollection services)
         {
             Services = services;
+            AddDefaultRepository();
+            AddDefaultQueue();
+            Services.AddSingleton(typeof(ISerializer<>), typeof(JsonSerializer<>));
+        }
+
+        public JobBuilder AddDefaultRepository()
+        {
             Services.AddSingleton<IJobRepository, InMemoryJobRepository>();
+            return this;
+        }
+
+        public JobBuilder AddDefaultQueue()
+        {
             Services.AddOptions<InMemoryJobQueueConfiguration>();
             Services.AddSingleton<IJobQueue, InMemoryJobQueue>();
-            Services.AddSingleton(typeof(ISerializer<>), typeof(JsonSerializer<>));
+            return this;
         }
 
         public JobBuilder AddRepository<T>() where T : class, IJobRepository

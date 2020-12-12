@@ -38,6 +38,8 @@ namespace MvcDemo
                 });
 
             services.AddJobs(jobs => jobs
+                .AddDefaultRepository()
+                .AddDefaultQueue()
                 .AddControllerEndpoints(controllers => controllers
                     .AddController<PingEndpoint, PingRequest, PingResponse>(endpoint => endpoint
                         .UseService("demo")
