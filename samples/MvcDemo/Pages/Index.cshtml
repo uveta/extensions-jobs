@@ -1,29 +1,40 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Jobs pattern demo";
 }
 
-<div class="text-center">
+@* <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div> *@
+
+<div class="text-center">
+    <p>
+        Go to <a href="swagger">OpenAPI definition</a>
+    </p>
 </div>
 
-<p>
-    Go to <a href="swagger">Swagger definition</a>
-</p>
+<div class="text-center">
+    <p>
+        or
+    </p>
+</div>
 
-<div class="text=center">
-    <div>
-        <button onclick="createJob(this.value)" value="ping" class="btn btn-primary">Start ping job</button>
+<div class="text-center">
+    <p>
+        <button onclick="createJob(this.value)" value="ping" class="btn btn-primary">Start ping demo</button>
+    </p>
+    <div class="" style="visibility: hidden" id="job-id-container">
+        <label class="pr-2 font-weight-bold" for="job-id">Id:</label><span id="job-id"></span>
     </div>
-    <div>
-        <label for="job-id">Job Id:</label><span id="job-id">123-456-789</span>
+    <div class="" style="visibility: hidden" id="job-state-container">
+        <label class="pr-2 font-weight-bold" for="job-state">State:</label><span id="job-state"></span>
     </div>
-    <div>
-        <label for="job-status">Job Status:</label><span id="job-status">started</span>
+    <div class="" style="visibility: hidden" id="job-output-container">
+        <label class="pr-2 font-weight-bold" for="job-output">Output:</label><span class="text-primary" id="job-output"></span>
     </div>
-    <div>
-        <label for="job-output">Job Output:</label><span id="job-output">output</span>
+    <div class="text-danger" style="visibility: hidden" id="job-error-container">
+        <label class="pr-2 font-weight-bold" for="job-error">Error:</label><span id="job-error"></span>
     </div>
 </div>
