@@ -4,11 +4,10 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Uveta.Extensions.Jobs.Endpoints.Mvc.Services
 {
-    public class ControllerGenerator
+    internal class ControllerGenerator
     {
         private const string NAMESPACE = "Extensions.Jobs.Endpoints.Generated.Controllers";
 

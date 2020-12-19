@@ -16,7 +16,7 @@ namespace Uveta.Extensions.Jobs.Endpoints.Mvc.DependencyInjection
             Services = services;
         }
 
-        public ControllerEndpointsBuilder AddController<TEndpoint, TInput, TOutput>(
+        public ControllerEndpointsBuilder AddControllerEndpoint<TEndpoint, TInput, TOutput>(
             Action<EndpointConfiguration<TEndpoint>> endpoint)
             where TEndpoint : IEndpoint
         {

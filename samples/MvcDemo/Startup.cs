@@ -41,7 +41,7 @@ namespace MvcDemo
                 .AddDefaultRepository()
                 .AddDefaultQueue()
                 .AddControllerEndpoints(controllers => controllers
-                    .AddController<PingEndpoint, PingRequest, PingResponse>(endpoint => endpoint
+                    .AddControllerEndpoint<PingEndpoint, PingRequest, PingResponse>(endpoint => endpoint
                         .UseService("demo")
                         .UseArea("ping")
                     )
