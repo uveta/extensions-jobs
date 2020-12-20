@@ -3,43 +3,26 @@
 
 // Write your JavaScript code.
 
-async function createJob(input) {
-  const createJobUrl = "/jobs/ping";
-  const jobInput = { message: input };
-  jobStarted();
-  startLoader();
-  const createResponse = await fetch(createJobUrl, {
-    method: "post",
-    body: JSON.stringify(jobInput),
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
-  const jobUrl = createResponse.headers.get("location");
-  let job = await createResponse.json();
-  let jobId = `${job.header.identifier.service}.${job.header.identifier.area}.${job.header.identifier.id}`;
-  updateJobId(jobId);
-  let jobState = job.header.state;
-  updateJobState(jobState);
+async function startDemo(input) {
+  const jobUrl = await createJob(input);
   let jobFinished = false;
   let jobOutputUrl = null;
   let jobOutput = null;
   let error = null;
   do {
     await sleep(1000);
+    console.info("Polling job from", jobUrl);
     const jobResponse = await fetch(jobUrl);
     if (jobResponse.redirected) {
-      console.info("Redirected to ", jobResponse.url);
+      console.info("Redirected to", jobResponse.url);
       jobFinished = true;
       jobOutputUrl = jobResponse.url;
       jobOutput = await jobResponse.json();
       updateJobState("finished");
     } else {
-      job = await jobResponse.json();
+      const job = await jobResponse.json();
       jobState = job.header.state;
       updateJobState(jobState);
-      console.info("Job state ", jobState);
       if (jobState === "created" || jobState == "started") {
         jobFinished = false;
       } else {
@@ -60,16 +43,41 @@ async function createJob(input) {
   if (error) {
     updateJobError(error);
   }
-  stopLoader();
+  hideLoader();
+}
+
+async function createJob(input) {
+  const createJobUrl = "/jobs/ping";
+  const jobInput = { message: input };
+  jobStarted();
+  showLoader();
+  const createResponse = await fetch(createJobUrl, {
+    method: "post",
+    body: JSON.stringify(jobInput),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+  const job = await createResponse.json();
+  const jobId = `${job.header.identifier.service}.${job.header.identifier.area}.${job.header.identifier.id}`;
+  updateJobId(jobId);
+  const jobState = job.header.state;
+  updateJobState(jobState);
+  return createResponse.headers.get("location");
 }
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function startLoader() {}
+function showLoader() {
+  document.getElementById("job-running").style.visibility = "visible";
+}
 
-function stopLoader() {}
+function hideLoader() {
+  document.getElementById("job-running").style.visibility = "hidden";
+}
 
 function jobStarted() {
   document.getElementById("job-id-container").style.visibility = "hidden";

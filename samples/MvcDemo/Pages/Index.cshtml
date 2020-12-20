@@ -23,18 +23,23 @@
 
 <div class="text-center">
     <p>
-        <button onclick="createJob(this.value)" value="ping" class="btn btn-primary">Start ping demo</button>
+        <button onclick="startDemo(this.value)" value="ping" class="btn btn-primary">Start ping demo</button>
+        <div id="job-running" style="visibility: hidden" class="spinner-border text-primary"></div>
     </p>
     <div class="" style="visibility: hidden" id="job-id-container">
-        <label class="pr-2 font-weight-bold" for="job-id">Id:</label><span id="job-id"></span>
+        <label class="pr-2 font-weight-bold" for="job-id">Job Id:</label>
+        <span class="font-italic" id="job-id"></span>
     </div>
     <div class="" style="visibility: hidden" id="job-state-container">
-        <label class="pr-2 font-weight-bold" for="job-state">State:</label><span id="job-state"></span>
+        <label class="pr-2 font-weight-bold" for="job-state">Job State:</label>
+        <span class="font-italic" id="job-state"></span>
     </div>
     <div class="" style="visibility: hidden" id="job-output-container">
-        <label class="pr-2 font-weight-bold" for="job-output">Output:</label><span class="text-primary" id="job-output"></span>
+        <label class="pr-2 font-weight-bold" for="job-output">Job Output:</label>
+        <span class="font-italic" id="job-output"></span>
     </div>
     <div class="text-danger" style="visibility: hidden" id="job-error-container">
-        <label class="pr-2 font-weight-bold" for="job-error">Error:</label><span id="job-error"></span>
+        <label class="pr-2 font-weight-bold" for="job-error">Job Error:</label>
+        <span class="font-weight-bold" id="job-error"></span>
     </div>
 </div>
