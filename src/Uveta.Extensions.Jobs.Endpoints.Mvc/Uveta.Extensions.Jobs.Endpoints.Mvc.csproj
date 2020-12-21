@@ -6,6 +6,15 @@
     <Nullable>Enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Authors>Uroš Miletić</Authors>
+    <PackageDescription>Part of job extensions</PackageDescription>
+    <Copyright></Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/uveta/extensions-jobs.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/uveta/extensions-jobs</PackageProjectUrl>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />

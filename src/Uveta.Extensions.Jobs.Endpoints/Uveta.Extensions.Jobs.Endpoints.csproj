@@ -6,6 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Authors>Uroš Miletić</Authors>
+    <PackageDescription>Part of job extensions</PackageDescription>
+    <Copyright></Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/uveta/extensions-jobs.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/uveta/extensions-jobs</PackageProjectUrl>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Uveta.Extensions.Jobs\Uveta.Extensions.Jobs.csproj" />
   </ItemGroup>
